@@ -14,11 +14,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float moveValue = 0.01f;
     [SerializeField] private float jumpPower = 1f;
+    [SerializeField] private float runRatio = 2f;
 
     private Rigidbody rb;
     private float Horizontal = 0.0f;
     private float Vertical = 0.0f;
     private bool Jump = false;
+    private bool Run = false;
 
     void Start()
     {
@@ -60,21 +62,39 @@ public class Player : MonoBehaviour
         }
 
 
-
+        Run = false;
         Vector2 moveDirection = new(0, 0);
+        // xé≤
         if (vol[0] < 1500)
         {
             moveDirection.x = -1;
+            if (vol[0] < 800)
+            {
+                Run = true;
+            }
         } else if (vol[0] > 3000)
         {
             moveDirection.x = 1;
+            if (vol[0] > 3600)
+            {
+                Run = true;
+            }
         }
+        // yé≤
         if (vol[1] < 1500)
         {
             moveDirection.y = -1;
+            if (vol[1] < 1000)
+            {
+                Run = true;
+            }
         } else if (vol[1] > 3000)
         { 
             moveDirection.y = 1;
+            if (vol[1] > 3600)
+            {
+                Run = true;
+            }
         }
         moveDirection.Normalize();
         Horizontal= moveDirection.x;
@@ -97,6 +117,10 @@ public class Player : MonoBehaviour
         Vector3 right = this.transform.right.normalized;
         movement += moveValue * Vertical * front;
         movement += Horizontal * moveValue * right;
+        if(Run)
+        {
+            movement *= runRatio;
+        }
         //Vector3 movement = new Vector3(Horizontal * moveValue, 0, Vertical * moveValue);
         if (Jump)
         {
