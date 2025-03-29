@@ -8,7 +8,7 @@ public class ControllerManager : MonoBehaviour
 
     [SerializeField] private PlayerController player;
 
-    public int peltier = 0; // 0 -> cool, 1 -> hot
+    public int peltier = 9; // 0 -> cool, 1 -> hot , 9 -> nothing
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class ControllerManager : MonoBehaviour
     {
         var str = peltier.ToString();
         serialHandler.Write(str);
-        // Debug.Log(str);
+        Debug.Log(str);
     }
 
     void OnDataRecieved(string message)
