@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private VisualEffect LStrip;
     [SerializeField] private VisualEffect Damage;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip damageSFX;
+
     private float ForewardVelocity = 0;
     private float HorizontalVelocity = 0;
     private float LRBlend = 0;
@@ -232,7 +236,7 @@ public class PlayerController : MonoBehaviour
         enable = false;
         rb.AddForce(Vector3.zero);
 
-        controllerManager.peltier = 0; // set cool
+        controllerManager.peltier = 9; // set nothing
 
         RStrip.SendEvent("OnStop");
         LStrip.SendEvent("OnStop");
@@ -249,6 +253,7 @@ public class PlayerController : MonoBehaviour
                 controllerManager.peltier = 1; // after if return to hot
             });
             Damage.SendEvent("OnPlay");
+            audioSource.PlayOneShot(damageSFX);
         }
     }
 }
